@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>QGIS2leaf webmap</title>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+		<link rel="stylesheet" type="text/css" href="css/own_style.css">
+		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+		<script src="js/leaflet-hash.js"></script>
+		<script src="js/Autolinker.min.js"></script>
+	</head>
+	<body>
+		<div id="map"></div>
+		<script src="data/exp_wellheadoperation.js"></script>
+		<script src="data/exp_urbanbusinessdistrict.js"></script>
+		<script src="data/exp_transitional.js"></script>
+		<script src="data/exp_suburbanresidential.js"></script>
+		<script src="data/exp_suburbanneighborhoodcommercial.js"></script>
+		<script src="data/exp_suburbanmultifamily.js"></script>
+		<script src="data/exp_suburbangeneralcommercial.js"></script>
+		<script src="data/exp_openspace.js"></script>
+		<script src="data/exp_null.js"></script>
+		<script src="data/exp_matureresidential.js"></script>
+		<script src="data/exp_matureneighborhoodcommercial.js"></script>
+		<script src="data/exp_maturemultifamily.js"></script>
+		<script src="data/exp_maturegeneralcommercial.js"></script>
+		<script src="data/exp_manufacturedhome.js"></script>
+		<script src="data/exp_lightindustrial.js"></script>
+		<script src="data/exp_generalindustrial.js"></script>
+		<script src="data/exp_eclecticresidential.js"></script>
+		<script src="data/exp_eclecticneighborhoodcommercial.js"></script>
+		<script src="data/exp_eclecticmultifamily.js"></script>
+		<script src="data/exp_eclecticgeneralcommercial.js"></script>
+		<script src="data/exp_centralbusinessdistrict.js"></script>
+		<script src="data/exp_campusinstitutional.js"></script>
+		<script src="data/exp_businesspark.js"></script>
+		<script src="data/exp_airport.js"></script>
+		<script>
+		var map = L.map('map', {
+			zoomControl:true, maxZoom:19
+		}).fitBounds([[39.7001601772,-84.3434440058],[39.8653198171,-84.0597232157]]);
+		var hash = new L.Hash(map);
+		var additional_attrib = 'created w. <a href="https://github.com/geolicious/qgis2leaf" target ="_blank">qgis2leaf</a> by <a href="http://www.geolicious.de" target ="_blank">Geolicious</a> & contributors<br>';
+		var feature_group = new L.featureGroup([]);
+		var raster_group = new L.LayerGroup([]);
+		var basemap_0 = L.tileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', { 
+			attribution: additional_attrib + '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
+		});	
+		basemap_0.addTo(map);	
+		var layerOrder=new Array();
+		function pop_airport(feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+		}
+
+		function doStyleairport(feature) {
+				return {
+					color: '#ffffff',
+					fillColor: '#1f78b4',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+		}
+		var exp_airportJSON = new L.geoJson(exp_airport,{
+			onEachFeature: pop_airport,
+			style: doStyleairport
+		});
+		layerOrder[layerOrder.length] = exp_airportJSON;
+		for (index = 0; index < layerOrder.length; index++) {
+			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+		}
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_airportJSON);
+		function pop_businesspark(feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+		}
+
+		function doStylebusinesspark(feature) {
+				return {
+					color: '#ffffff',
+					fillColor: '#1f78b4',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+		}
+		var exp_businessparkJSON = new L.geoJson(exp_businesspark,{
+			onEachFeature: pop_businesspark,
+			style: doStylebusinesspark
+		});
+		layerOrder[layerOrder.length] = exp_businessparkJSON;
+		for (index = 0; index < layerOrder.length; index++) {
+			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+		}
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_businessparkJSON);
+		function pop_campusinstitutional(feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+		}
+
+		function doStylecampusinstitutional(feature) {
+				return {
+					color: '#ffffff',
+					fillColor: '#1f78b4',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+		}
+		var exp_campusinstitutionalJSON = new L.geoJson(exp_campusinstitutional,{
+			onEachFeature: pop_campusinstitutional,
+			style: doStylecampusinstitutional
+		});
+		layerOrder[layerOrder.length] = exp_campusinstitutionalJSON;
+		for (index = 0; index < layerOrder.length; index++) {
+			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+		}
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_campusinstitutionalJSON);
+		function pop_centralbusinessdistrict(feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+		}
+
+		function doStylecentralbusinessdistrict(feature) {
+				return {
+					color: '#ffffff',
+					fillColor: '#1f78b4',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+		}
+		var exp_centralbusinessdistrictJSON = new L.geoJson(exp_centralbusinessdistrict,{
+			onEachFeature: pop_centralbusinessdistrict,
+			style: doStylecentralbusinessdistrict
+		});
+		layerOrder[layerOrder.length] = exp_centralbusinessdistrictJSON;
+		for (index = 0; index < layerOrder.length; index++) {
+			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+		}
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_centralbusinessdistrictJSON);
+		function pop_eclecticgeneralcommercial(feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+		}
+
+		function doStyleeclecticgeneralcommercial(feature) {
+				return {
+					color: '#ffffff',
+					fillColor: '#1f78b4',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+		}
+		var exp_eclecticgeneralcommercialJSON = new L.geoJson(exp_eclecticgeneralcommercial,{
+			onEachFeature: pop_eclecticgeneralcommercial,
+			style: doStyleeclecticgeneralcommercial
+		});
+		layerOrder[layerOrder.length] = exp_eclecticgeneralcommercialJSON;
+		for (index = 0; index < layerOrder.length; index++) {
+			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+		}
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_eclecticgeneralcommercialJSON);
+		function pop_eclecticmultifamily(feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+		}
+
+		function doStyleeclecticmultifamily(feature) {
+				return {
+					color: '#ffffff',
+					fillColor: '#1f78b4',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+		}
+		var exp_eclecticmultifamilyJSON = new L.geoJson(exp_eclecticmultifamily,{
+			onEachFeature: pop_eclecticmultifamily,
+			style: doStyleeclecticmultifamily
+		});
+		layerOrder[layerOrder.length] = exp_eclecticmultifamilyJSON;
+		for (index = 0; index < layerOrder.length; index++) {
+			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+		}
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_eclecticmultifamilyJSON);
+		function pop_eclecticneighborhoodcommercial(feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+		}
+
+		function doStyleeclecticneighborhoodcommercial(feature) {
+				return {
+					color: '#ffffff',
+					fillColor: '#1f78b4',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+		}
+		var exp_eclecticneighborhoodcommercialJSON = new L.geoJson(exp_eclecticneighborhoodcommercial,{
+			onEachFeature: pop_eclecticneighborhoodcommercial,
+			style: doStyleeclecticneighborhoodcommercial
+		});
+		layerOrder[layerOrder.length] = exp_eclecticneighborhoodcommercialJSON;
+		for (index = 0; index < layerOrder.length; index++) {
+			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+		}
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_eclecticneighborhoodcommercialJSON);
+		function pop_eclecticresidential(feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+		}
+
+		function doStyleeclecticresidential(feature) {
+				return {
+					color: '#ffffff',
+					fillColor: '#1f78b4',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+		}
+		var exp_eclecticresidentialJSON = new L.geoJson(exp_eclecticresidential,{
+			onEachFeature: pop_eclecticresidential,
+			style: doStyleeclecticresidential
+		});
+		layerOrder[layerOrder.length] = exp_eclecticresidentialJSON;
+		for (index = 0; index < layerOrder.length; index++) {
+			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+		}
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_eclecticresidentialJSON);
+		function pop_generalindustrial(feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+		}
+
+		function doStylegeneralindustrial(feature) {
+				return {
+					color: '#ffffff',
+					fillColor: '#1f78b4',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+		}
+		var exp_generalindustrialJSON = new L.geoJson(exp_generalindustrial,{
+			onEachFeature: pop_generalindustrial,
+			style: doStylegeneralindustrial
+		});
+		layerOrder[layerOrder.length] = exp_generalindustrialJSON;
+		for (index = 0; index < layerOrder.length; index++) {
+			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+		}
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_generalindustrialJSON);
+		function pop_lightindustrial(feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+		}
+
+		function doStylelightindustrial(feature) {
+				return {
+					color: '#ffffff',
+					fillColor: '#1f78b4',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+		}
+		var exp_lightindustrialJSON = new L.geoJson(exp_lightindustrial,{
+			onEachFeature: pop_lightindustrial,
+			style: doStylelightindustrial
+		});
+		layerOrder[layerOrder.length] = exp_lightindustrialJSON;
+		for (index = 0; index < layerOrder.length; index++) {
+			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+		}
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_lightindustrialJSON);
+		function pop_manufacturedhome(feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+		}
+
+		function doStylemanufacturedhome(feature) {
+				return {
+					color: '#ffffff',
+					fillColor: '#1f78b4',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+		}
+		var exp_manufacturedhomeJSON = new L.geoJson(exp_manufacturedhome,{
+			onEachFeature: pop_manufacturedhome,
+			style: doStylemanufacturedhome
+		});
+		layerOrder[layerOrder.length] = exp_manufacturedhomeJSON;
+		for (index = 0; index < layerOrder.length; index++) {
+			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+		}
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_manufacturedhomeJSON);
+		function pop_maturegeneralcommercial(feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+		}
+
+		function doStylematuregeneralcommercial(feature) {
+				return {
+					color: '#ffffff',
+					fillColor: '#1f78b4',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+		}
+		var exp_maturegeneralcommercialJSON = new L.geoJson(exp_maturegeneralcommercial,{
+			onEachFeature: pop_maturegeneralcommercial,
+			style: doStylematuregeneralcommercial
+		});
+		layerOrder[layerOrder.length] = exp_maturegeneralcommercialJSON;
+		for (index = 0; index < layerOrder.length; index++) {
+			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+		}
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_maturegeneralcommercialJSON);
+		function pop_maturemultifamily(feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+		}
+
+		function doStylematuremultifamily(feature) {
+				return {
+					color: '#ffffff',
+					fillColor: '#1f78b4',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+		}
+		var exp_maturemultifamilyJSON = new L.geoJson(exp_maturemultifamily,{
+			onEachFeature: pop_maturemultifamily,
+			style: doStylematuremultifamily
+		});
+		layerOrder[layerOrder.length] = exp_maturemultifamilyJSON;
+		for (index = 0; index < layerOrder.length; index++) {
+			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+		}
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_maturemultifamilyJSON);
+		function pop_matureneighborhoodcommercial(feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+		}
+
+		function doStylematureneighborhoodcommercial(feature) {
+				return {
+					color: '#ffffff',
+					fillColor: '#1f78b4',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+		}
+		var exp_matureneighborhoodcommercialJSON = new L.geoJson(exp_matureneighborhoodcommercial,{
+			onEachFeature: pop_matureneighborhoodcommercial,
+			style: doStylematureneighborhoodcommercial
+		});
+		layerOrder[layerOrder.length] = exp_matureneighborhoodcommercialJSON;
+		for (index = 0; index < layerOrder.length; index++) {
+			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+		}
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_matureneighborhoodcommercialJSON);
+		function pop_matureresidential(feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+		}
+
+		function doStylematureresidential(feature) {
+				return {
+					color: '#ffffff',
+					fillColor: '#1f78b4',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+		}
+		var exp_matureresidentialJSON = new L.geoJson(exp_matureresidential,{
+			onEachFeature: pop_matureresidential,
+			style: doStylematureresidential
+		});
+		layerOrder[layerOrder.length] = exp_matureresidentialJSON;
+		for (index = 0; index < layerOrder.length; index++) {
+			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+		}
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_matureresidentialJSON);
+		function pop_null(feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+		}
+
+		function doStylenull(feature) {
+				return {
+					color: '#ffffff',
+					fillColor: '#1f78b4',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+		}
+		var exp_nullJSON = new L.geoJson(exp_null,{
+			onEachFeature: pop_null,
+			style: doStylenull
+		});
+		layerOrder[layerOrder.length] = exp_nullJSON;
+		for (index = 0; index < layerOrder.length; index++) {
+			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+		}
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_nullJSON);
+		function pop_openspace(feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+		}
+
+		function doStyleopenspace(feature) {
+				return {
+					color: '#ffffff',
+					fillColor: '#1f78b4',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+		}
+		var exp_openspaceJSON = new L.geoJson(exp_openspace,{
+			onEachFeature: pop_openspace,
+			style: doStyleopenspace
+		});
+		layerOrder[layerOrder.length] = exp_openspaceJSON;
+		for (index = 0; index < layerOrder.length; index++) {
+			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+		}
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_openspaceJSON);
+		function pop_suburbangeneralcommercial(feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+		}
+
+		function doStylesuburbangeneralcommercial(feature) {
+				return {
+					color: '#ffffff',
+					fillColor: '#1f78b4',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+		}
+		var exp_suburbangeneralcommercialJSON = new L.geoJson(exp_suburbangeneralcommercial,{
+			onEachFeature: pop_suburbangeneralcommercial,
+			style: doStylesuburbangeneralcommercial
+		});
+		layerOrder[layerOrder.length] = exp_suburbangeneralcommercialJSON;
+		for (index = 0; index < layerOrder.length; index++) {
+			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+		}
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_suburbangeneralcommercialJSON);
+		function pop_suburbanmultifamily(feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+		}
+
+		function doStylesuburbanmultifamily(feature) {
+				return {
+					color: '#ffffff',
+					fillColor: '#1f78b4',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+		}
+		var exp_suburbanmultifamilyJSON = new L.geoJson(exp_suburbanmultifamily,{
+			onEachFeature: pop_suburbanmultifamily,
+			style: doStylesuburbanmultifamily
+		});
+		layerOrder[layerOrder.length] = exp_suburbanmultifamilyJSON;
+		for (index = 0; index < layerOrder.length; index++) {
+			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+		}
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_suburbanmultifamilyJSON);
+		function pop_suburbanneighborhoodcommercial(feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+		}
+
+		function doStylesuburbanneighborhoodcommercial(feature) {
+				return {
+					color: '#ffffff',
+					fillColor: '#1f78b4',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+		}
+		var exp_suburbanneighborhoodcommercialJSON = new L.geoJson(exp_suburbanneighborhoodcommercial,{
+			onEachFeature: pop_suburbanneighborhoodcommercial,
+			style: doStylesuburbanneighborhoodcommercial
+		});
+		layerOrder[layerOrder.length] = exp_suburbanneighborhoodcommercialJSON;
+		for (index = 0; index < layerOrder.length; index++) {
+			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+		}
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_suburbanneighborhoodcommercialJSON);
+		function pop_suburbanresidential(feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+		}
+
+		function doStylesuburbanresidential(feature) {
+				return {
+					color: '#ffffff',
+					fillColor: '#1f78b4',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+		}
+		var exp_suburbanresidentialJSON = new L.geoJson(exp_suburbanresidential,{
+			onEachFeature: pop_suburbanresidential,
+			style: doStylesuburbanresidential
+		});
+		layerOrder[layerOrder.length] = exp_suburbanresidentialJSON;
+		for (index = 0; index < layerOrder.length; index++) {
+			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+		}
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_suburbanresidentialJSON);
+		function pop_transitional(feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+		}
+
+		function doStyletransitional(feature) {
+				return {
+					color: '#ffffff',
+					fillColor: '#1f78b4',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+		}
+		var exp_transitionalJSON = new L.geoJson(exp_transitional,{
+			onEachFeature: pop_transitional,
+			style: doStyletransitional
+		});
+		layerOrder[layerOrder.length] = exp_transitionalJSON;
+		for (index = 0; index < layerOrder.length; index++) {
+			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+		}
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_transitionalJSON);
+		function pop_urbanbusinessdistrict(feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+		}
+
+		function doStyleurbanbusinessdistrict(feature) {
+				return {
+					color: '#ffffff',
+					fillColor: '#1f78b4',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+		}
+		var exp_urbanbusinessdistrictJSON = new L.geoJson(exp_urbanbusinessdistrict,{
+			onEachFeature: pop_urbanbusinessdistrict,
+			style: doStyleurbanbusinessdistrict
+		});
+		layerOrder[layerOrder.length] = exp_urbanbusinessdistrictJSON;
+		for (index = 0; index < layerOrder.length; index++) {
+			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+		}
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_urbanbusinessdistrictJSON);
+		function pop_wellheadoperation(feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+		}
+
+		function doStylewellheadoperation(feature) {
+				return {
+					color: '#ffffff',
+					fillColor: '#1f78b4',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+		}
+		var exp_wellheadoperationJSON = new L.geoJson(exp_wellheadoperation,{
+			onEachFeature: pop_wellheadoperation,
+			style: doStylewellheadoperation
+		});
+		layerOrder[layerOrder.length] = exp_wellheadoperationJSON;
+		for (index = 0; index < layerOrder.length; index++) {
+			feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+		}
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_wellheadoperationJSON);
+
+		feature_group.addTo(map);
+		var title = new L.Control();
+		title.onAdd = function (map) {
+			this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+			this.update();
+			return this._div;
+		};
+		title.update = function () {
+			this._div.innerHTML = '<h2>Zoning</h2>August 2015'
+		};
+		title.addTo(map);
+	var baseMaps = {
+		'OSM Black & White': basemap_0
+	};
+		L.control.layers(baseMaps,{"wellheadoperation": exp_wellheadoperationJSON,"urbanbusinessdistrict": exp_urbanbusinessdistrictJSON,"transitional": exp_transitionalJSON,"suburbanresidential": exp_suburbanresidentialJSON,"suburbanneighborhoodcommercial": exp_suburbanneighborhoodcommercialJSON,"suburbanmultifamily": exp_suburbanmultifamilyJSON,"suburbangeneralcommercial": exp_suburbangeneralcommercialJSON,"openspace": exp_openspaceJSON,"null": exp_nullJSON,"matureresidential": exp_matureresidentialJSON,"matureneighborhoodcommercial": exp_matureneighborhoodcommercialJSON,"maturemultifamily": exp_maturemultifamilyJSON,"maturegeneralcommercial": exp_maturegeneralcommercialJSON,"manufacturedhome": exp_manufacturedhomeJSON,"lightindustrial": exp_lightindustrialJSON,"generalindustrial": exp_generalindustrialJSON,"eclecticresidential": exp_eclecticresidentialJSON,"eclecticneighborhoodcommercial": exp_eclecticneighborhoodcommercialJSON,"eclecticmultifamily": exp_eclecticmultifamilyJSON,"eclecticgeneralcommercial": exp_eclecticgeneralcommercialJSON,"centralbusinessdistrict": exp_centralbusinessdistrictJSON,"campusinstitutional": exp_campusinstitutionalJSON,"businesspark": exp_businessparkJSON,"airport": exp_airportJSON},{collapsed:false}).addTo(map);
+		L.control.scale({options: {position: 'bottomleft',maxWidth: 100,metric: true,imperial: false,updateWhenIdle: false}}).addTo(map);
+	</script>
+</body>
+</html>
