@@ -44,12 +44,12 @@
 		var additional_attrib = 'created w. <a href="https://github.com/geolicious/qgis2leaf" target ="_blank">qgis2leaf</a> by <a href="http://www.geolicious.de" target ="_blank">Geolicious</a> & contributors<br>';
 		var feature_group = new L.featureGroup([]);
 		var raster_group = new L.LayerGroup([]);
-		var basemap_0 = L.tileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', { 
+		var basemap_0 = L.tileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
 			attribution: additional_attrib + '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
-		});	
-		basemap_0.addTo(map);	
+		});
+		basemap_0.addTo(map);
 		var layerOrder=new Array();
-		function pop_airport(feature, layer) {					
+		function pop_airport(feature, layer) {
 			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
 			layer.bindPopup(popupContent);
 		}
@@ -61,7 +61,7 @@
 					weight: 1.3,
 					dashArray: '',
 					opacity: 1.0,
-					fillOpacity: 1.0
+					fillOpacity: 0.5
 				};
 
 		}
@@ -75,7 +75,7 @@
 		}
 		//add comment sign to hide this layer on the map in the initial view.
 		feature_group.addLayer(exp_airportJSON);
-		function pop_businesspark(feature, layer) {					
+		function pop_businesspark(feature, layer) {
 			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
 			layer.bindPopup(popupContent);
 		}
@@ -87,7 +87,7 @@
 					weight: 1.3,
 					dashArray: '',
 					opacity: 1.0,
-					fillOpacity: 1.0
+					fillOpacity: 0.5
 				};
 
 		}
@@ -101,7 +101,7 @@
 		}
 		//add comment sign to hide this layer on the map in the initial view.
 		feature_group.addLayer(exp_businessparkJSON);
-		function pop_campusinstitutional(feature, layer) {					
+		function pop_campusinstitutional(feature, layer) {
 			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
 			layer.bindPopup(popupContent);
 		}
@@ -113,7 +113,7 @@
 					weight: 1.3,
 					dashArray: '',
 					opacity: 1.0,
-					fillOpacity: 1.0
+					fillOpacity: 0.5
 				};
 
 		}
@@ -127,7 +127,7 @@
 		}
 		//add comment sign to hide this layer on the map in the initial view.
 		feature_group.addLayer(exp_campusinstitutionalJSON);
-		function pop_centralbusinessdistrict(feature, layer) {					
+		function pop_centralbusinessdistrict(feature, layer) {
 			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
 			layer.bindPopup(popupContent);
 		}
@@ -139,7 +139,7 @@
 					weight: 1.3,
 					dashArray: '',
 					opacity: 1.0,
-					fillOpacity: 1.0
+					fillOpacity: 0.5
 				};
 
 		}
@@ -153,7 +153,7 @@
 		}
 		//add comment sign to hide this layer on the map in the initial view.
 		feature_group.addLayer(exp_centralbusinessdistrictJSON);
-		function pop_eclecticgeneralcommercial(feature, layer) {					
+		function pop_eclecticgeneralcommercial(feature, layer) {
 			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
 			layer.bindPopup(popupContent);
 		}
@@ -165,7 +165,7 @@
 					weight: 1.3,
 					dashArray: '',
 					opacity: 1.0,
-					fillOpacity: 1.0
+					fillOpacity: 0.5
 				};
 
 		}
@@ -179,7 +179,7 @@
 		}
 		//add comment sign to hide this layer on the map in the initial view.
 		feature_group.addLayer(exp_eclecticgeneralcommercialJSON);
-		function pop_eclecticmultifamily(feature, layer) {					
+		function pop_eclecticmultifamily(feature, layer) {
 			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
 			layer.bindPopup(popupContent);
 		}
@@ -191,7 +191,7 @@
 					weight: 1.3,
 					dashArray: '',
 					opacity: 1.0,
-					fillOpacity: 1.0
+					fillOpacity: 0.5
 				};
 
 		}
@@ -205,7 +205,7 @@
 		}
 		//add comment sign to hide this layer on the map in the initial view.
 		feature_group.addLayer(exp_eclecticmultifamilyJSON);
-		function pop_eclecticneighborhoodcommercial(feature, layer) {					
+		function pop_eclecticneighborhoodcommercial(feature, layer) {
 			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
 			layer.bindPopup(popupContent);
 		}
@@ -217,7 +217,7 @@
 					weight: 1.3,
 					dashArray: '',
 					opacity: 1.0,
-					fillOpacity: 1.0
+					fillOpacity: 0.5
 				};
 
 		}
@@ -231,7 +231,7 @@
 		}
 		//add comment sign to hide this layer on the map in the initial view.
 		feature_group.addLayer(exp_eclecticneighborhoodcommercialJSON);
-		function pop_eclecticresidential(feature, layer) {					
+		function pop_eclecticresidential(feature, layer) {
 			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
 			layer.bindPopup(popupContent);
 		}
@@ -243,7 +243,7 @@
 					weight: 1.3,
 					dashArray: '',
 					opacity: 1.0,
-					fillOpacity: 1.0
+					fillOpacity: 0.5
 				};
 
 		}
@@ -257,7 +257,7 @@
 		}
 		//add comment sign to hide this layer on the map in the initial view.
 		feature_group.addLayer(exp_eclecticresidentialJSON);
-		function pop_generalindustrial(feature, layer) {					
+		function pop_generalindustrial(feature, layer) {
 			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
 			layer.bindPopup(popupContent);
 		}
@@ -269,7 +269,7 @@
 					weight: 1.3,
 					dashArray: '',
 					opacity: 1.0,
-					fillOpacity: 1.0
+					fillOpacity: 0.5
 				};
 
 		}
@@ -283,7 +283,7 @@
 		}
 		//add comment sign to hide this layer on the map in the initial view.
 		feature_group.addLayer(exp_generalindustrialJSON);
-		function pop_lightindustrial(feature, layer) {					
+		function pop_lightindustrial(feature, layer) {
 			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
 			layer.bindPopup(popupContent);
 		}
@@ -295,7 +295,7 @@
 					weight: 1.3,
 					dashArray: '',
 					opacity: 1.0,
-					fillOpacity: 1.0
+					fillOpacity: 0.5
 				};
 
 		}
@@ -309,7 +309,7 @@
 		}
 		//add comment sign to hide this layer on the map in the initial view.
 		feature_group.addLayer(exp_lightindustrialJSON);
-		function pop_manufacturedhome(feature, layer) {					
+		function pop_manufacturedhome(feature, layer) {
 			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
 			layer.bindPopup(popupContent);
 		}
@@ -321,7 +321,7 @@
 					weight: 1.3,
 					dashArray: '',
 					opacity: 1.0,
-					fillOpacity: 1.0
+					fillOpacity: 0.5
 				};
 
 		}
@@ -335,7 +335,7 @@
 		}
 		//add comment sign to hide this layer on the map in the initial view.
 		feature_group.addLayer(exp_manufacturedhomeJSON);
-		function pop_maturegeneralcommercial(feature, layer) {					
+		function pop_maturegeneralcommercial(feature, layer) {
 			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
 			layer.bindPopup(popupContent);
 		}
@@ -347,7 +347,7 @@
 					weight: 1.3,
 					dashArray: '',
 					opacity: 1.0,
-					fillOpacity: 1.0
+					fillOpacity: 0.5
 				};
 
 		}
@@ -361,7 +361,7 @@
 		}
 		//add comment sign to hide this layer on the map in the initial view.
 		feature_group.addLayer(exp_maturegeneralcommercialJSON);
-		function pop_maturemultifamily(feature, layer) {					
+		function pop_maturemultifamily(feature, layer) {
 			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
 			layer.bindPopup(popupContent);
 		}
@@ -373,7 +373,7 @@
 					weight: 1.3,
 					dashArray: '',
 					opacity: 1.0,
-					fillOpacity: 1.0
+					fillOpacity: 0.5
 				};
 
 		}
@@ -387,7 +387,7 @@
 		}
 		//add comment sign to hide this layer on the map in the initial view.
 		feature_group.addLayer(exp_maturemultifamilyJSON);
-		function pop_matureneighborhoodcommercial(feature, layer) {					
+		function pop_matureneighborhoodcommercial(feature, layer) {
 			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
 			layer.bindPopup(popupContent);
 		}
@@ -399,7 +399,7 @@
 					weight: 1.3,
 					dashArray: '',
 					opacity: 1.0,
-					fillOpacity: 1.0
+					fillOpacity: 0.5
 				};
 
 		}
@@ -413,7 +413,7 @@
 		}
 		//add comment sign to hide this layer on the map in the initial view.
 		feature_group.addLayer(exp_matureneighborhoodcommercialJSON);
-		function pop_matureresidential(feature, layer) {					
+		function pop_matureresidential(feature, layer) {
 			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
 			layer.bindPopup(popupContent);
 		}
@@ -425,7 +425,7 @@
 					weight: 1.3,
 					dashArray: '',
 					opacity: 1.0,
-					fillOpacity: 1.0
+					fillOpacity: 0.5
 				};
 
 		}
@@ -439,7 +439,7 @@
 		}
 		//add comment sign to hide this layer on the map in the initial view.
 		feature_group.addLayer(exp_matureresidentialJSON);
-		function pop_null(feature, layer) {					
+		function pop_null(feature, layer) {
 			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
 			layer.bindPopup(popupContent);
 		}
@@ -451,7 +451,7 @@
 					weight: 1.3,
 					dashArray: '',
 					opacity: 1.0,
-					fillOpacity: 1.0
+					fillOpacity: 0.5
 				};
 
 		}
@@ -465,7 +465,7 @@
 		}
 		//add comment sign to hide this layer on the map in the initial view.
 		feature_group.addLayer(exp_nullJSON);
-		function pop_openspace(feature, layer) {					
+		function pop_openspace(feature, layer) {
 			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
 			layer.bindPopup(popupContent);
 		}
@@ -477,7 +477,7 @@
 					weight: 1.3,
 					dashArray: '',
 					opacity: 1.0,
-					fillOpacity: 1.0
+					fillOpacity: 0.5
 				};
 
 		}
@@ -491,7 +491,7 @@
 		}
 		//add comment sign to hide this layer on the map in the initial view.
 		feature_group.addLayer(exp_openspaceJSON);
-		function pop_suburbangeneralcommercial(feature, layer) {					
+		function pop_suburbangeneralcommercial(feature, layer) {
 			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
 			layer.bindPopup(popupContent);
 		}
@@ -503,7 +503,7 @@
 					weight: 1.3,
 					dashArray: '',
 					opacity: 1.0,
-					fillOpacity: 1.0
+					fillOpacity: 0.5
 				};
 
 		}
@@ -517,7 +517,7 @@
 		}
 		//add comment sign to hide this layer on the map in the initial view.
 		feature_group.addLayer(exp_suburbangeneralcommercialJSON);
-		function pop_suburbanmultifamily(feature, layer) {					
+		function pop_suburbanmultifamily(feature, layer) {
 			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
 			layer.bindPopup(popupContent);
 		}
@@ -529,7 +529,7 @@
 					weight: 1.3,
 					dashArray: '',
 					opacity: 1.0,
-					fillOpacity: 1.0
+					fillOpacity: 0.5
 				};
 
 		}
@@ -543,7 +543,7 @@
 		}
 		//add comment sign to hide this layer on the map in the initial view.
 		feature_group.addLayer(exp_suburbanmultifamilyJSON);
-		function pop_suburbanneighborhoodcommercial(feature, layer) {					
+		function pop_suburbanneighborhoodcommercial(feature, layer) {
 			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
 			layer.bindPopup(popupContent);
 		}
@@ -555,7 +555,7 @@
 					weight: 1.3,
 					dashArray: '',
 					opacity: 1.0,
-					fillOpacity: 1.0
+					fillOpacity: 0.5
 				};
 
 		}
@@ -569,7 +569,7 @@
 		}
 		//add comment sign to hide this layer on the map in the initial view.
 		feature_group.addLayer(exp_suburbanneighborhoodcommercialJSON);
-		function pop_suburbanresidential(feature, layer) {					
+		function pop_suburbanresidential(feature, layer) {
 			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
 			layer.bindPopup(popupContent);
 		}
@@ -581,7 +581,7 @@
 					weight: 1.3,
 					dashArray: '',
 					opacity: 1.0,
-					fillOpacity: 1.0
+					fillOpacity: 0.5
 				};
 
 		}
@@ -595,7 +595,7 @@
 		}
 		//add comment sign to hide this layer on the map in the initial view.
 		feature_group.addLayer(exp_suburbanresidentialJSON);
-		function pop_transitional(feature, layer) {					
+		function pop_transitional(feature, layer) {
 			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
 			layer.bindPopup(popupContent);
 		}
@@ -607,7 +607,7 @@
 					weight: 1.3,
 					dashArray: '',
 					opacity: 1.0,
-					fillOpacity: 1.0
+					fillOpacity: 0.5
 				};
 
 		}
@@ -621,7 +621,7 @@
 		}
 		//add comment sign to hide this layer on the map in the initial view.
 		feature_group.addLayer(exp_transitionalJSON);
-		function pop_urbanbusinessdistrict(feature, layer) {					
+		function pop_urbanbusinessdistrict(feature, layer) {
 			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
 			layer.bindPopup(popupContent);
 		}
@@ -633,7 +633,7 @@
 					weight: 1.3,
 					dashArray: '',
 					opacity: 1.0,
-					fillOpacity: 1.0
+					fillOpacity: 0.5
 				};
 
 		}
@@ -647,7 +647,7 @@
 		}
 		//add comment sign to hide this layer on the map in the initial view.
 		feature_group.addLayer(exp_urbanbusinessdistrictJSON);
-		function pop_wellheadoperation(feature, layer) {					
+		function pop_wellheadoperation(feature, layer) {
 			var popupContent = '<table><tr><th scope="row">zone_name</th><td>' + Autolinker.link(String(feature.properties['zone_name'])) + '</td></tr></table>';
 			layer.bindPopup(popupContent);
 		}
@@ -659,7 +659,7 @@
 					weight: 1.3,
 					dashArray: '',
 					opacity: 1.0,
-					fillOpacity: 1.0
+					fillOpacity: 0.5
 				};
 
 		}
