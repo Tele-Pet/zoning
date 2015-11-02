@@ -8,7 +8,7 @@
 <li><a href="#determiningprojection">Determining Projection</a></li>
 <li><a href="#uniquevaluesinnew_zonecolumn">Unique values in <code>NEW_ZONE</code> column</a></li>
 <li><a href="#addingfullnamestoattributecolumninqgis">Adding full names to attribute column in QGIS</a></li>
-<li><a href="#deletedunneededcolumns">Deleted unneeded columns</a></li>
+<li><a href="#deleteunneededcolumns">Delete unneeded columns</a></li>
 <li><a href="#exportseparatelayersasgeojson">Export separate layers as GeoJSON</a></li>
 </ul></li>
 <li><a href="#understandingzoningdata">Understanding Zoning Data</a>
@@ -90,7 +90,7 @@ WHEN &quot;NEW_ZONE&quot; = &apos;WO&apos; THEN &apos;Wellhead Operation&apos;
 ELSE &apos;not found&apos;
 END</code></pre>
 
-<h2 id="deletedunneededcolumns">Deleted unneeded columns</h2>
+<h2 id="deleteunneededcolumns">Delete unneeded columns</h2>
 
 <p>Toggle <em>on</em> edit mode and delete all columns except <code>zone_name</code>. Then, choose <em>Save as</em> option, specifying <code>.GeoJSON</code> format and <code>EPSG:4326</code> CRS.</p>
 
@@ -140,7 +140,7 @@ for var in *.shp; do shp2geojson ${var%\.*}; done</code></pre>
 	<td style="text-align:left;">NULL</td>
 	<td style="text-align:left;"></td>
 	<td style="text-align:left;"></td>
-	<td style="text-align:left;">One instance appears to be Westwood Elementary, Westwood Park, and some land north of the park</td>
+	<td style="text-align:left;">Just one instance, appears to be Westwood Elementary, Westwood Park, and some land north of the park</td>
 </tr>
 <tr>
 	<td style="text-align:left;">AP</td>
