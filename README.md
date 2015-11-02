@@ -140,7 +140,7 @@ for var in *.shp; do shp2geojson ${var%\.*}; done</code></pre>
 	<td style="text-align:left;">NULL</td>
 	<td style="text-align:left;"></td>
 	<td style="text-align:left;"></td>
-	<td style="text-align:left;">One instance, appears to be Westwood Elementary, Westwood Park, and some land north of the park</td>
+	<td style="text-align:left;">One instance appears to be Westwood Elementary, Westwood Park, and some land north of the park</td>
 </tr>
 <tr>
 	<td style="text-align:left;">AP</td>
