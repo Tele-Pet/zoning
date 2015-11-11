@@ -8,7 +8,7 @@
 <li><a href="#determiningprojection">Determining Projection</a></li>
 <li><a href="#uniquevaluesinnew_zonecolumn">Unique values in <code>NEW_ZONE</code> column</a></li>
 <li><a href="#addingfullnamestoattributecolumninqgis">Adding full names to attribute column in QGIS</a></li>
-<li><a href="#deleteunneededcolumns">Delete unneeded columns</a></li>
+<li><a href="#deletedunneededcolumns">Deleted unneeded columns</a></li>
 <li><a href="#exportseparatelayersasgeojson">Export separate layers as GeoJSON</a></li>
 </ul></li>
 <li><a href="#understandingzoningdata">Understanding Zoning Data</a>
@@ -16,6 +16,12 @@
 <ul>
 <li><a href="#decodingvalues">Decoding values</a></li>
 <li><a href="#codesforuseregulations">Codes for Use Regulations</a></li>
+</ul></li>
+<li><a href="#miscellaneous">Miscellaneous</a>
+
+<ul>
+<li><a href="#definitions">Definitions</a></li>
+<li><a href="#conditional">Conditional</a></li>
 </ul></li>
 </ul>
 <!-- /MarkdownTOC -->
@@ -26,7 +32,7 @@
 
 <p>Currently, each zone is represented by an individual <code>.GeoJSON</code> layer that can be viewed individually by clicking on any of the layers <a href="https://github.com/Tele-Pet/zoning/tree/master/GeoJSON_lyrs">here</a>, or all layers at once <a href="https://github.com/Tele-Pet/zoning/blob/master/GeoJSON_lyrs/zoning_4326.geojson">here</a>.</p>
 
-<p>A rough draft of a custom Leaflet-based map has been started <a href="https://github.com/Tele-Pet/zoning/tree/master/qgis_to_leaflet/export_2015_09_06_10_35_09">here</a>. It can be downloaded and viewed locally in browser by opening the <code>index.html</code> file. Also, a working draft of the map is being hosted <a href="http://chizu.kontele.com/leaflet_test">here</a>.</p>
+<p>A rough draft of a custom Leaflet-based map has been started <a href="https://github.com/Tele-Pet/zoning/tree/master/qgis_to_leaflet/export_2015_09_06_10_35_09">here</a>. It can be downloaded and viewed locally in browser by opening the <code>index.html</code> file.</p>
 
 <p>Existing documentation detailing zoning data is available <a href="http://www.cityofdayton.org/departments/pcd/planning/Pages/ZoningMap.aspx">here</a>, and will need to be researched in order to further refine any data visualizations.</p>
 
@@ -90,7 +96,7 @@ WHEN &quot;NEW_ZONE&quot; = &apos;WO&apos; THEN &apos;Wellhead Operation&apos;
 ELSE &apos;not found&apos;
 END</code></pre>
 
-<h2 id="deleteunneededcolumns">Delete unneeded columns</h2>
+<h2 id="deletedunneededcolumns">Deleted unneeded columns</h2>
 
 <p>Toggle <em>on</em> edit mode and delete all columns except <code>zone_name</code>. Then, choose <em>Save as</em> option, specifying <code>.GeoJSON</code> format and <code>EPSG:4326</code> CRS.</p>
 
@@ -140,7 +146,7 @@ for var in *.shp; do shp2geojson ${var%\.*}; done</code></pre>
 	<td style="text-align:left;">NULL</td>
 	<td style="text-align:left;"></td>
 	<td style="text-align:left;"></td>
-	<td style="text-align:left;">Just one instance, appears to be Westwood Elementary, Westwood Park, and some land north of the park</td>
+	<td style="text-align:left;">One instance, appears to be Westwood Elementary, Westwood Park, and some land north of the park</td>
 </tr>
 <tr>
 	<td style="text-align:left;">AP</td>
@@ -306,6 +312,38 @@ for var in *.shp; do shp2geojson ${var%\.*}; done</code></pre>
 <li><strong>A:</strong> <em>permitted as a subordinate building or use when it is clearly incidental to and located on the same zoning lot as the principal building or use</em>, i.e., <strong>accessory use</strong> <strong>p. 97</strong></li>
 <li><strong>PD:</strong> <em>Permitted as part of a Planned Development</em> <strong>(p. 104)</strong></li>
 </ul>
+
+<h1 id="miscellaneous">Miscellaneous</h1>
+
+<h2 id="definitions">Definitions</h2>
+
+<h3 id="non-conformingusage">Non-Conforming Usage</h3>
+
+<p>Non-conforming usage can mean a parcel within a given zone may have been grandfathered into a zone despite not fullfilling a given zone&#8217;s requirements, and thus can be referred to as a <em>non-conforming</em> parcel. On page 51, there is further explanation: </p>
+
+<blockquote>
+<p>non-conforming uses, buildings, lots, and structures are subject to regulations limiting their use, restoration, reconstruction, extension, and substitution.</p>
+</blockquote>
+
+<h3 id="retail">Retail</h3>
+
+<p>On page 83, <strong>Retail</strong> is defined as the following:</p>
+
+<blockquote>
+<p>An establishment engaged in the selling or renting of goods or merchandise to the general public for personal or household consumption, and rendering services incidental to the sale of such products. Such an establishment is open to the general public during regular business hours and has display areas that are designed and laid out to attract the general public. In determining a use to be a retail use, the proportion of display area vs. storage area and the proportion of the building facade devoted to display windows may be considered. This term does not include any adult entertainment uses. This term includes, but is not limited to, artist’s studios, dry cleaning establishments, laundromats, portrait studios, and bakeries.</p>
+</blockquote>
+
+<h2 id="conditional">Conditional</h2>
+
+<h3 id="conditionalrelatedtodistance">Conditional Related to Distance</h3>
+
+<p>On page 313 of Dayton&#8217;s zoning documentation, the following is stated:</p>
+
+<blockquote>
+<p>Any building or other facility, on a zoning lot, used to house or exercise livestock shall be at least 200 feet from any lot in a residential zoning district.</p>
+</blockquote>
+
+<p>This might be an opportunity to build a query based on spatial analysis&#8211; i.e., a buffer of all areas that are &gt;= 200 feet from a residential zone district.</p>
 <!-- Footnotes -->
 
 <div class="footnotes">
