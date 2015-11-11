@@ -5,13 +5,11 @@
 <li><a href="#gisstepsnotes">GIS Steps &amp; Notes</a>
 
 <ul>
-<li><a href="#determiningprojection">Determining Projection</a></li>
-<li><a href="#uniquevaluesinnew_zonecolumn">Unique values in <code>NEW_ZONE</code> column</a></li>
-<li><a href="#addingfullnamestoattributecolumninqgis">Adding full names to attribute column in QGIS</a></li>
-<li><a href="#deletedunneededcolumns">Deleted unneeded columns</a></li>
-<li><a href="#exportseparatelayersasgeojson">Export separate layers as GeoJSON</a></li>
+<li><a href="#countyparceldata">County Parcel data</a></li>
+<li><a href="#countylandusecodes">County Land Use Codes</a></li>
+<li><a href="#cityzoningdata">City Zoning Data</a></li>
 </ul></li>
-<li><a href="#understandingzoningdata">Understanding Zoning Data</a>
+<li><a href="#understandingcityzoningdata">Understanding City Zoning Data</a>
 
 <ul>
 <li><a href="#decodingvalues">Decoding values</a></li>
@@ -38,7 +36,20 @@
 
 <h1 id="gisstepsnotes">GIS Steps &amp; Notes</h1>
 
-<h2 id="determiningprojection">Determining Projection</h2>
+<h2 id="countyparceldata">County Parcel data</h2>
+
+<p><code>Geodatabase_County.zip</code> can be downloaded from <a href="http://www.mcauditor.org/downloads/gis_download_geodb.cfm">mcauditor.org</a>, from which the <code>mc_parcel_polygon_e any</code> layer can be attained. The following expression can be used to select just those parcels that are part of the city of Dayton:</p>
+<pre><code class="(null)">&quot;LOC_AREA&quot;  =  &apos;DAYTON&apos; </code></pre>
+
+<p><strong>Initially</strong> there appears to not be a column that refers <em>land use codes</em> that are discussed below.</p>
+
+<h2 id="countylandusecodes">County Land Use Codes</h2>
+
+<p>A list of <strong>land use codes</strong> can be downloaded in PDF from from <a href="http://www.mcrealestate.org/pdffiles/luc.pdf">mcrealestate.org</a>. <strong>Initially</strong> there appears to not be any mention of <a href="#non-conformingusage">Non-Conforming Usage</a> that are discussed below. </p>
+
+<h2 id="cityzoningdata">City Zoning Data</h2>
+
+<h3 id="determiningprojection">Determining Projection</h3>
 
 <p>It was 100% clear what projection the original file is in. Loading <code>zoning_aug62015.shp</code> file into QGIS leads to the following <em>generated</em> CRS:</p>
 <pre><code class="(null)">**USER:100000
@@ -54,12 +65,12 @@ Found a single exact match for the specified search terms:<br/>
 
 <p>In QGIS, <code>zoning_aug62015.shp</code> is <strong>Saved as&#8230;</strong>(reprojected) with <strong>CRS:3735</strong> formally designated.</p>
 
-<h2 id="uniquevaluesinnew_zonecolumn">Unique values in <code>NEW_ZONE</code> column</h2>
+<h3 id="uniquevaluesinnew_zonecolumn">Unique values in <code>NEW_ZONE</code> column</h3>
 
 <p>Presuming environment is <strong>set up to run QGIS modules externally</strong>, <a href="google.com">getUniqueAttributes_v1.py</a> can be run to print out total number of unique values in <code>NEW_ZONE</code> column, and a list of all unique names. Here are the <strong>26</strong> unique values found in <a href="google.com">zoning_aug62015.shp</a> file: </p>
 <pre><code class="(null)">[NULL, u&apos;AP&apos;, u&apos;BP&apos;, u&apos;CBD&apos;, u&apos;CI&apos;, u&apos;EGC&apos;, u&apos;EMF&apos;, u&apos;ENC&apos;, u&apos;ER-3&apos;, u&apos;ER-4&apos;, u&apos;I-1&apos;, u&apos;I-2&apos;, u&apos;MGC&apos;, u&apos;MH&apos;, u&apos;MMF&apos;, u&apos;MNC&apos;, u&apos;MR-5&apos;, u&apos;OS&apos;, u&apos;SGC&apos;, u&apos;SMF&apos;, u&apos;SNC&apos;, u&apos;SR-1&apos;, u&apos;SR-2&apos;, u&apos;T&apos;, u&apos;UBD&apos;, u&apos;WO&apos;]</code></pre>
 
-<h2 id="addingfullnamestoattributecolumninqgis">Adding full names to attribute column in QGIS</h2>
+<h3 id="addingfullnamestoattributecolumninqgis">Adding full names to attribute column in QGIS</h3>
 
 <p>In <strong>field calculator</strong>, with <strong>Create new field</strong> checked, create a new field with the follwing settings:<br/>
 1. <strong>Output field name:</strong> zone_name<br/>
@@ -96,11 +107,11 @@ WHEN &quot;NEW_ZONE&quot; = &apos;WO&apos; THEN &apos;Wellhead Operation&apos;
 ELSE &apos;not found&apos;
 END</code></pre>
 
-<h2 id="deletedunneededcolumns">Deleted unneeded columns</h2>
+<h3 id="deleteunneededcolumns">Delete unneeded columns</h3>
 
 <p>Toggle <em>on</em> edit mode and delete all columns except <code>zone_name</code>. Then, choose <em>Save as</em> option, specifying <code>.GeoJSON</code> format and <code>EPSG:4326</code> CRS.</p>
 
-<h2 id="exportseparatelayersasgeojson">Export separate layers as GeoJSON</h2>
+<h3 id="exportseparatelayersasgeojson">Export separate layers as GeoJSON</h3>
 
 <p>Use <em>Split Vector Layer</em> tool (Vector → Data Management Tools → Split Vector Layer) to output a layer for each unique attribute/s. Rename and reformat to minimal names and lower, snake_case. <a href="#fn:1" id="fnref:1" title="see footnote" class="footnote">[1]</a></p>
 
@@ -118,7 +129,7 @@ for var in *.shp; do shp2geojson ${var%\.*}; done</code></pre>
 
 <p>**Note: <code>ogr2ogr</code> is needed. That and other environment details are highlighted by Balter on his <a href="http://ben.balter.com/2013/06/26/how-to-convert-shapefiles-to-geojson-for-use-on-github/">site</a>. </p>
 
-<h1 id="understandingzoningdata">Understanding Zoning Data</h1>
+<h1 id="understandingcityzoningdata">Understanding City Zoning Data</h1>
 
 <h2 id="decodingvalues">Decoding values</h2>
 
