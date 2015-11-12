@@ -45,7 +45,7 @@
 
 <h2 id="countylandusecodes">County Land Use Codes</h2>
 
-<p>A list of <strong>land use codes</strong> can be downloaded in PDF from from <a href="http://www.mcrealestate.org/pdffiles/luc.pdf">mcrealestate.org</a>. <strong>Initially</strong> there appears to not be any mention of <a href="#non-conformingusage">Non-Conforming Usage</a> that are discussed below. </p>
+<p>A list of <strong>land use codes</strong> can be downloaded in PDF from from <a href="http://www.mcrealestate.org/pdffiles/luc.pdf">mcrealestate.org</a>. (For a list of the other GIS data available, go <a href="http://www.mcauditor.org/downloads/gis_filedownload.cfm">here</a>) <strong>Initially</strong> there appears to not be any mention of <a href="#non-conformingusage">Non-Conforming Usage</a> that are discussed below. </p>
 
 <h2 id="cityzoningdata">City Zoning Data</h2>
 
