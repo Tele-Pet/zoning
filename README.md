@@ -5,7 +5,8 @@
     - [Determining Projection][determining projection]
     - [Unique values in `NEW_ZONE` column][unique values in new_zone column]
     - [Adding full names to attribute column in QGIS][adding full names to attribute column in qgis]
-    - [Deleted unneeded columns][deleted unneeded columns]
+    - [Delete unneeded columns][delete unneeded columns]
+    - [Export as GeoJSON, and reproject][export as geojson and reproject]
     - [Export separate layers as GeoJSON][export separate layers as geojson]
 - [Understanding Zoning Data][understanding zoning data]
     - [Decoding values][decoding values]
@@ -85,11 +86,22 @@ ELSE 'not found'
 END
 ```
 
-## Deleted unneeded columns
-Toggle _on_ edit mode and delete all columns except `zone_name`.  Then, choose _Save as_ option, specifying `.GeoJSON` format and `EPSG:4326` CRS.
+## Delete unneeded columns
+Toggle _on_ edit mode and delete all columns except `OBJECTID` and `zone_name`.  Then, choose _Save as_ option, specifying `.GeoJSON` format and `EPSG:4326` CRS.
+
+## Export as GeoJSON, and reproject
+Right-click layer and choose **Save as...**, then select GeoJSON as format.  Adust the **CRS** to be **EPSG:4326**.  Name the file `zoning_4326`.  
 
 ## Export separate layers as GeoJSON
-Use _Split Vector Layer_ tool (Vector → Data Management Tools → Split Vector Layer) to output a layer for each unique attribute/s.  Rename and reformat to minimal names and lower, snake_case.  [^fn1]
+Use _Split Vector Layer_ tool (Vector → Data Management Tools → Split Vector Layer) to output a layer for each unique attribute/s.  Settings are as follows:
+
+| **Input Vector Layer:** | `zoning_4326` |
+|-|-|
+| **Unique ID Field** | `OBJECTID` |
+
+
+
+Rename and reformat to minimal names and lower, snake_case.  [^fn1]
 
 Employ Ben Balter's excellent [script](https://gist.github.com/benbalter/5858851) to batch export `.shp` to `GeoJSON` files:
 
@@ -114,7 +126,7 @@ Page 95 of the **[City of Dayton, Ohio Zoning Code](http://www.cityofdayton.org/
 
 | Value | Full Name | Description | Misc |
 |-------|-----------|-------------|------|
-| NULL  |           |             |  One instance, appears to be Westwood Elementary, Westwood Park, and some land north of the park    |
+| NULL  |           |             |  Just one instance, appears to be Westwood Elementary, Westwood Park, and some land north of the park    |
 | AP    |     Airport      |             |      |
 | BP    |     Business Park      |             |      |
 | CBD   |  Central Business District         |             |      |
