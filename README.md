@@ -1,292 +1,466 @@
 <!-- MarkdownTOC -->
 
-- [Introduction][introduction]
-- [GIS Steps & Notes][gis steps  notes]
-    - [County Parcel data][county parcel data]
-    - [County Land Use Codes][county land use codes]
-    - [City Zoning Data][city zoning data]
-        - [Determining Projection][determining projection]
-        - [Unique values in `NEW_ZONE` column][unique values in new_zone column]
-        - [Adding full names to attribute column in QGIS][adding full names to attribute column in qgis]
-        - [Delete unneeded columns][delete unneeded columns]
-        - [Export separate layers as GeoJSON][export separate layers as geojson]
-- [Understanding City Zoning Data][understanding city zoning data]
-    - [Decoding values][decoding values]
-    - [Codes for Use Regulations][codes for use regulations]
-- [Miscellaneous][miscellaneous]
-    - [OpenCounter Santa Cruz][opencounter santa cruz]
-        - [Business Types][business types]
-        - [Operations Section][operations section]
-        - [Team Section][team section]
-        - [Site Section][site section]
-        - [Summary][summary]
-    - [Definitions in Dayton Zoning PDF][definitions in dayton zoning pdf]
-        - [Non-Conforming Usage][non-conforming usage]
-        - [Retail][retail]
-    - [Conditional][conditional]
-        - [Conditional Related to Distance][conditional related to distance]
+- [nzip all files in a directory (only if dealing zip files!)][nzip all files in a directory only if dealing zip files]
+- [or var in *.zip; do unzip &quot;$var&quot;; done][or var in zip do unzip quotvarquot done]
+- [onvert all shapefiles][onvert all shapefiles]
 
 <!-- /MarkdownTOC -->
-# Introduction
-The goal of this project is to prepare and visualize a zoning shapefile in order to encourage and streamline local business and community initiatives.
 
-Currently, each zone is represented by an individual `.GeoJSON` layer that can be viewed individually by clicking on any of the layers [here](https://github.com/Tele-Pet/zoning/tree/master/GeoJSON_lyrs), or all layers at once [here](https://github.com/Tele-Pet/zoning/blob/master/GeoJSON_lyrs/zoning_4326.geojson).
+<h1 id="introduction">Introduction</h1>
 
-A rough draft of a custom Leaflet-based map has been started [here](https://github.com/Tele-Pet/zoning/tree/master/qgis_to_leaflet/export_2015_09_06_10_35_09).  It can be downloaded and viewed locally in browser by opening the `index.html` file.
+<p>The goal of this project is to prepare and visualize a zoning shapefile in order to encourage and streamline local business and community initiatives.</p>
 
-Existing documentation detailing zoning data is available [here](http://www.cityofdayton.org/departments/pcd/planning/Pages/ZoningMap.aspx), and will need to be researched in order to further refine any data visualizations.
+<p>Currently, each zone is represented by an individual <code>.GeoJSON</code> layer that can be viewed individually by clicking on any of the layers <a href="https://github.com/Tele-Pet/zoning/tree/master/GeoJSON_lyrs">here</a>, or all layers at once <a href="https://github.com/Tele-Pet/zoning/blob/master/GeoJSON_lyrs/zoning_4326.geojson">here</a>.</p>
 
+<p>A rough draft of a custom Leaflet-based map has been started <a href="https://github.com/Tele-Pet/zoning/tree/master/qgis_to_leaflet/export_2015_09_06_10_35_09">here</a>. It can be downloaded and viewed locally in browser by opening the <code>index.html</code> file.</p>
 
-# GIS Steps & Notes
-## County Parcel data
-`Geodatabase_County.zip` can be downloaded from [mcauditor.org](http://www.mcauditor.org/downloads/gis_download_geodb.cfm), from which the `mc_parcel_polygon_e any` layer can be attained.  The following expression can be used to select just those parcels that are part of the city of Dayton:
+<p>Existing documentation detailing zoning data is available <a href="http://www.cityofdayton.org/departments/pcd/planning/Pages/ZoningMap.aspx">here</a>, and will need to be researched in order to further refine any data visualizations.</p>
 
-```
-"LOC_AREA"  =  'DAYTON' 
-```
+<h1 id="gisstepsnotes">GIS Steps &amp; Notes</h1>
 
-**Initially** there appears to not be a column that refers _land use codes_ that are discussed below.
+<h2 id="countyparceldata">County Parcel data</h2>
 
-## County Land Use Codes
-A list of **land use codes** can be downloaded in PDF from from [mcrealestate.org](http://www.mcrealestate.org/pdffiles/luc.pdf).  (For a list of the other GIS data available, go [here](http://www.mcauditor.org/downloads/gis_filedownload.cfm)) **Initially** there appears to not be any mention of [Non-Conforming Usage][non-conforming usage] that are discussed below.  
+<p><code>Geodatabase_County.zip</code> can be downloaded from <a href="http://www.mcauditor.org/downloads/gis_download_geodb.cfm">mcauditor.org</a>, from which the <code>mc_parcel_polygon_e any</code> layer can be attained. The following expression can be used to select just those parcels that are part of the city of Dayton:</p>
+<pre><code class="(null)">&quot;LOC_AREA&quot;  =  &apos;DAYTON&apos; </code></pre>
 
-## City Zoning Data
-### Determining Projection
-It was 100% clear what projection the original file is in.  Loading `zoning_aug62015.shp` file into QGIS leads to the following _generated_ CRS:
+<p><strong>Initially</strong> there appears to not be a column that refers <em>land use codes</em> that are discussed below.</p>
 
-```
-**USER:100000
-+proj=lcc +lat_1=38.73333333333333 +lat_2=40.03333333333333 +lat_0=38 +lon_0=-82.5 +x_0=600000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs
-```
+<h2 id="countylandusecodes">County Land Use Codes</h2>
 
-However, upon importing the included `zoning_aug62015.prj` to the [prj2epsg](http://prj2epsg.org) website, the following results were gotten:
+<p>A list of <strong>land use codes</strong> can be downloaded in PDF from from <a href="http://www.mcrealestate.org/pdffiles/luc.pdf">mcrealestate.org</a>. (For a list of the other GIS data available, go <a href="http://www.mcauditor.org/downloads/gis_filedownload.cfm">here</a>) <strong>Initially</strong> there appears to not be any mention of <a href="#non-conformingusage">Non-Conforming Usage</a> that are discussed below. </p>
 
-> **Results**
-Found a single exact match for the specified search terms:
->**3735** - NAD_1983_StatePlane_Ohio_South_FIPS_3402_Feet
+<h2 id="cityzoningdata">City Zoning Data</h2>
 
-In QGIS, `zoning_aug62015.shp` is **Saved as...**(reprojected) with **CRS:3735** formally designated.
+<h3 id="determiningprojection">Determining Projection</h3>
 
-### Unique values in `NEW_ZONE` column
-Presuming environment is **set up to run QGIS modules externally**, [getUniqueAttributes_v1.py](google.com) can be run to print out total number of unique values in `NEW_ZONE` column, and a list of all unique names.  Here are the **26** unique values found in [zoning_aug62015.shp](google.com) file: 
+<p>It was 100% clear what projection the original file is in. Loading <code>zoning_aug62015.shp</code> file into QGIS leads to the following <em>generated</em> CRS:</p>
+<pre><code class="(null)">**USER:100000
++proj=lcc +lat_1=38.73333333333333 +lat_2=40.03333333333333 +lat_0=38 +lon_0=-82.5 +x_0=600000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs</code></pre>
 
-```
-[NULL, u'AP', u'BP', u'CBD', u'CI', u'EGC', u'EMF', u'ENC', u'ER-3', u'ER-4', u'I-1', u'I-2', u'MGC', u'MH', u'MMF', u'MNC', u'MR-5', u'OS', u'SGC', u'SMF', u'SNC', u'SR-1', u'SR-2', u'T', u'UBD', u'WO']
-```
+<p>However, upon importing the included <code>zoning_aug62015.prj</code> to the <a href="http://prj2epsg.org">prj2epsg</a> website, the following results were gotten:</p>
 
-### Adding full names to attribute column in QGIS
-In **field calculator**, with **Create new field** checked, create a new field with the follwing settings:
-1. **Output field name:** zone_name
-2. **Output field type:** Text(string)
-3. **Output field width:** 50
+<blockquote>
+<p><strong>Results</strong><br/>
+Found a single exact match for the specified search terms:<br/>
+<strong>3735</strong> - NAD_1983_StatePlane_Ohio_South_FIPS_3402_Feet</p>
+</blockquote>
 
-Then run the following expression.  Once that has completed, click the **Save edits** button to save changes.
+<p>In QGIS, <code>zoning_aug62015.shp</code> is <strong>Saved as&#8230;</strong>(reprojected) with <strong>CRS:3735</strong> formally designated.</p>
 
-``` SQL
-CASE WHEN  "NEW_ZONE" IS  NULL  THEN 'null'
-WHEN "NEW_ZONE" = 'AP' THEN 'Airport'
-WHEN "NEW_ZONE" = 'BP' THEN 'Business Park'
-WHEN "NEW_ZONE" = 'CBD' THEN 'Central Business District'
-WHEN "NEW_ZONE" = 'CI' THEN 'Campus Institutional'
-WHEN "NEW_ZONE" = 'EGC' THEN 'Eclectic General Commercial'
-WHEN "NEW_ZONE" = 'EMF' THEN 'Eclectic Multi-Family'
-WHEN "NEW_ZONE" = 'ENC' THEN 'Eclectic Neighborhood Commercial'
-WHEN "NEW_ZONE" = 'ER-3' THEN 'Eclectic Residential'
-WHEN "NEW_ZONE" = 'ER-4' THEN 'Eclectic Residential'
-WHEN "NEW_ZONE" = 'I-1' THEN 'Light Industrial'
-WHEN "NEW_ZONE" = 'I-2' THEN 'General Industrial'
-WHEN "NEW_ZONE" = 'MGC' THEN 'Mature General Commercial'
-WHEN "NEW_ZONE" = 'MH' THEN 'Manufactured Home'
-WHEN "NEW_ZONE" = 'MMF' THEN 'Mature Multi-Family'
-WHEN "NEW_ZONE" = 'MNC' THEN 'Mature Neighborhood Commercial'
-WHEN "NEW_ZONE" = 'MR-5' THEN 'Mature Residential'
-WHEN "NEW_ZONE" = 'OS' THEN 'Open Space'
-WHEN "NEW_ZONE" = 'SGC' THEN 'Suburban General Commercial'
-WHEN "NEW_ZONE" = 'SMF' THEN 'Suburban Multi-Family'
-WHEN "NEW_ZONE" = 'SNC' THEN 'Suburban Neighborhood Commercial'
-WHEN "NEW_ZONE" = 'SR-1' THEN 'Suburban Residential'
-WHEN "NEW_ZONE" = 'SR-2' THEN 'Suburban Residential'
-WHEN "NEW_ZONE" = 'T' THEN 'Transitional'
-WHEN "NEW_ZONE" = 'UBD' THEN 'Urban Business District'
-WHEN "NEW_ZONE" = 'WO' THEN 'Wellhead Operation'
-ELSE 'not found'
-END
-```
+<h3 id="uniquevaluesinnew_zonecolumn">Unique values in <code>NEW_ZONE</code> column</h3>
 
-### Delete unneeded columns
-Toggle _on_ edit mode and delete all columns except `zone_name`.  Then, choose _Save as_ option, specifying `.GeoJSON` format and `EPSG:4326` CRS.
+<p>Presuming environment is <strong>set up to run QGIS modules externally</strong>, <a href="google.com">getUniqueAttributes_v1.py</a> can be run to print out total number of unique values in <code>NEW_ZONE</code> column, and a list of all unique names. Here are the <strong>26</strong> unique values found in <a href="google.com">zoning_aug62015.shp</a> file: </p>
+<pre><code class="(null)">[NULL, u&apos;AP&apos;, u&apos;BP&apos;, u&apos;CBD&apos;, u&apos;CI&apos;, u&apos;EGC&apos;, u&apos;EMF&apos;, u&apos;ENC&apos;, u&apos;ER-3&apos;, u&apos;ER-4&apos;, u&apos;I-1&apos;, u&apos;I-2&apos;, u&apos;MGC&apos;, u&apos;MH&apos;, u&apos;MMF&apos;, u&apos;MNC&apos;, u&apos;MR-5&apos;, u&apos;OS&apos;, u&apos;SGC&apos;, u&apos;SMF&apos;, u&apos;SNC&apos;, u&apos;SR-1&apos;, u&apos;SR-2&apos;, u&apos;T&apos;, u&apos;UBD&apos;, u&apos;WO&apos;]</code></pre>
 
-### Export separate layers as GeoJSON
-Use _Split Vector Layer_ tool (Vector → Data Management Tools → Split Vector Layer) to output a layer for each unique attribute/s.  Rename and reformat to minimal names and lower, snake_case.  [^fn1]
+<h3 id="addingfullnamestoattributecolumninqgis">Adding full names to attribute column in QGIS</h3>
 
-Employ Ben Balter's excellent [script](https://gist.github.com/benbalter/5858851) to batch export `.shp` to `GeoJSON` files:
+<p>In <strong>field calculator</strong>, with <strong>Create new field</strong> checked, create a new field with the follwing settings:<br/>
+1. <strong>Output field name:</strong> zone_name<br/>
+2. <strong>Output field type:</strong> Text(string)<br/>
+3. <strong>Output field width:</strong> 50</p>
 
-```Ruby
-#geojson conversion
+<p>Then run the following expression. Once that has completed, click the <strong>Save edits</strong> button to save changes.</p>
+<pre><code class="SQL">CASE WHEN  &quot;NEW_ZONE&quot; IS  NULL  THEN &apos;null&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;AP&apos; THEN &apos;Airport&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;BP&apos; THEN &apos;Business Park&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;CBD&apos; THEN &apos;Central Business District&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;CI&apos; THEN &apos;Campus Institutional&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;EGC&apos; THEN &apos;Eclectic General Commercial&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;EMF&apos; THEN &apos;Eclectic Multi-Family&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;ENC&apos; THEN &apos;Eclectic Neighborhood Commercial&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;ER-3&apos; THEN &apos;Eclectic Residential&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;ER-4&apos; THEN &apos;Eclectic Residential&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;I-1&apos; THEN &apos;Light Industrial&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;I-2&apos; THEN &apos;General Industrial&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;MGC&apos; THEN &apos;Mature General Commercial&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;MH&apos; THEN &apos;Manufactured Home&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;MMF&apos; THEN &apos;Mature Multi-Family&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;MNC&apos; THEN &apos;Mature Neighborhood Commercial&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;MR-5&apos; THEN &apos;Mature Residential&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;OS&apos; THEN &apos;Open Space&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;SGC&apos; THEN &apos;Suburban General Commercial&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;SMF&apos; THEN &apos;Suburban Multi-Family&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;SNC&apos; THEN &apos;Suburban Neighborhood Commercial&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;SR-1&apos; THEN &apos;Suburban Residential&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;SR-2&apos; THEN &apos;Suburban Residential&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;T&apos; THEN &apos;Transitional&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;UBD&apos; THEN &apos;Urban Business District&apos;
+WHEN &quot;NEW_ZONE&quot; = &apos;WO&apos; THEN &apos;Wellhead Operation&apos;
+ELSE &apos;not found&apos;
+END</code></pre>
+
+<h3 id="deleteunneededcolumns">Delete unneeded columns</h3>
+
+<p>Toggle <em>on</em> edit mode and delete all columns except <code>zone_name</code>. Then, choose <em>Save as</em> option, specifying <code>.GeoJSON</code> format and <code>EPSG:4326</code> CRS.</p>
+
+<h3 id="exportseparatelayersasgeojson">Export separate layers as GeoJSON</h3>
+
+<p>Use <em>Split Vector Layer</em> tool (Vector → Data Management Tools → Split Vector Layer) to output a layer for each unique attribute/s. Rename and reformat to minimal names and lower, snake_case. <a href="#fn:1" id="fnref:1" title="see footnote" class="footnote">[1]</a></p>
+
+<p>Employ Ben Balter&#8217;s excellent <a href="https://gist.github.com/benbalter/5858851">script</a> to batch export <code>.shp</code> to <code>GeoJSON</code> files:</p>
+<pre><code class="Ruby">#geojson conversion
 function shp2geojson() {
-  ogr2ogr -f GeoJSON -t_srs crs:84 "$1.geojson" "$1.shp"
+  ogr2ogr -f GeoJSON -t_srs crs:84 &quot;$1.geojson&quot; &quot;$1.shp&quot;
 }
 
 #unzip all files in a directory (only if dealing zip files!)
-#for var in *.zip; do unzip "$var"; done
+#for var in *.zip; do unzip &quot;$var&quot;; done
 
 #convert all shapefiles
-for var in *.shp; do shp2geojson ${var%\.*}; done
-```
+for var in *.shp; do shp2geojson ${var%\.*}; done</code></pre>
 
-**Note: `ogr2ogr` is needed.  That and other environment details are highlighted by Balter on his [site](http://ben.balter.com/2013/06/26/how-to-convert-shapefiles-to-geojson-for-use-on-github/). 
+<p>**Note: <code>ogr2ogr</code> is needed. That and other environment details are highlighted by Balter on his <a href="http://ben.balter.com/2013/06/26/how-to-convert-shapefiles-to-geojson-for-use-on-github/">site</a>. </p>
 
-# Understanding City Zoning Data
-## Decoding values
-Page 95 of the **[City of Dayton, Ohio Zoning Code](http://www.cityofdayton.org/departments/pcd/planning/Documents/ZoningCode.pdf)** PDF file summarizes the full names of all `NEW_ZONE` values found in [zoning_aug62015.shp](google.com) file.  For quick reference, see **Value** and **Full Name** columns below.  (**Description** and **Misc** columns are for unofficial notes.)
+<h1 id="understandingcityzoningdata">Understanding City Zoning Data</h1>
 
-| Value | Full Name | Description | Misc |
-|-------|-----------|-------------|------|
-| NULL  |           |             |  One instance, appears to be Westwood Elementary, Westwood Park, and some land north of the park    |
-| AP    |     Airport      |             |      |
-| BP    |     Business Park      |             |      |
-| CBD   |  Central Business District         |             |      |
-| CI    |      Campus Institutional     |             |      |
-| EGC   |    Eclectic General Commercial       |             |      |
-| EMF   |     Eclectic Multi-Family      |             |      |
-| ENC   |     Eclectic Neighborhood Commercial      |             |      |
-| ER-3  |   Eclectic Residential      |             |      |
-| ER-4  |   Eclectic Residential        |             |      |
-| I-1   |    Light Industrial       |             |      |
-| I-2   |        General Industrial   |             |      |
-| MGC   |    Mature General Commercial        |             |      |
-| MH    |        Manufactured Home   |             |      |
-| MMF   |     Mature Multi-Family      |             |      |
-| MNC   |        Mature Neighborhood Commercial   |             |      |
-| MR-5  |    Mature Residential        |             |      |
-| OS    |     Open Space      |             |      |
-| SGC   |   Suburban General Commercial        |             |      |
-| SMF   |     Suburban Multi-Family      |             |      |
-| SNC   |     Suburban Neighborhood Commercial      |             |      |
-| SR-1  |    Suburban Residential       |             |      |
-| SR-2  |  Suburban Residential         |             |      |
-| T     |     Transitional      |             |      |
-| UBD   |    Urban Business District       |             |      |
-| WO      |   Wellhead Operation        |             |      |
+<h2 id="decodingvalues">Decoding values</h2>
 
-## Codes for Use Regulations
-Beginning on page 95, meanings of the following are provided:
+<p>Page 95 of the <strong><a href="http://www.cityofdayton.org/departments/pcd/planning/Documents/ZoningCode.pdf">City of Dayton, Ohio Zoning Code</a></strong> PDF file summarizes the full names of all <code>NEW_ZONE</code> values found in <a href="google.com">zoning_aug62015.shp</a> file. For quick reference, see <strong>Value</strong> and <strong>Full Name</strong> columns below. (<strong>Description</strong> and <strong>Misc</strong> columns are for unofficial notes.)</p>
 
-* **P:**  _permitted by right as a **principal use**_ **(p. 96)**
-* **P*:** Same as above, though _the characteristics of these uses require development standards that are unique to the specific use, and these standards are not common to the uses generally permitted in the District_ **(p. 96)**
-* **C:** _A use listed in a Permitted Use Schedule is permitted as a **conditional use** in a District_ **(p. 97)**
-* **A:** _permitted as a subordinate building or use when it is clearly incidental to and located on the same zoning lot as the principal building or use_, i.e., **accessory use** **p. 97** 
-* **PD:** _Permitted as part of a Planned Development_ **(p. 104)**
+<table>
+<colgroup>
+<col style="text-align:left;"/>
+<col style="text-align:left;"/>
+<col style="text-align:left;"/>
+<col style="text-align:left;"/>
+</colgroup>
 
-# Miscellaneous
+<thead>
+<tr>
+    <th style="text-align:left;">Value</th>
+    <th style="text-align:left;">Full Name</th>
+    <th style="text-align:left;">Description</th>
+    <th style="text-align:left;">Misc</th>
+</tr>
+</thead>
 
-## OpenCounter Santa Cruz
-[OpenCounter Santa Cruz](http://opencounter.cityofsantacruz.com) is an example of a website that...
-> will guide you through the process of registering a new business in Santa Cruz, CA.
+<tbody>
+<tr>
+    <td style="text-align:left;">NULL</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;">One instance, appears to be Westwood Elementary, Westwood Park, and some land north of the park</td>
+</tr>
+<tr>
+    <td style="text-align:left;">AP</td>
+    <td style="text-align:left;">Airport</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+<tr>
+    <td style="text-align:left;">BP</td>
+    <td style="text-align:left;">Business Park</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+<tr>
+    <td style="text-align:left;">CBD</td>
+    <td style="text-align:left;">Central Business District</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+<tr>
+    <td style="text-align:left;">CI</td>
+    <td style="text-align:left;">Campus Institutional</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+<tr>
+    <td style="text-align:left;">EGC</td>
+    <td style="text-align:left;">Eclectic General Commercial</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+<tr>
+    <td style="text-align:left;">EMF</td>
+    <td style="text-align:left;">Eclectic Multi-Family</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+<tr>
+    <td style="text-align:left;">ENC</td>
+    <td style="text-align:left;">Eclectic Neighborhood Commercial</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+<tr>
+    <td style="text-align:left;">ER&#8211;3</td>
+    <td style="text-align:left;">Eclectic Residential</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+<tr>
+    <td style="text-align:left;">ER&#8211;4</td>
+    <td style="text-align:left;">Eclectic Residential</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+<tr>
+    <td style="text-align:left;">I&#8211;1</td>
+    <td style="text-align:left;">Light Industrial</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+<tr>
+    <td style="text-align:left;">I&#8211;2</td>
+    <td style="text-align:left;">General Industrial</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+<tr>
+    <td style="text-align:left;">MGC</td>
+    <td style="text-align:left;">Mature General Commercial</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+<tr>
+    <td style="text-align:left;">MH</td>
+    <td style="text-align:left;">Manufactured Home</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+<tr>
+    <td style="text-align:left;">MMF</td>
+    <td style="text-align:left;">Mature Multi-Family</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+<tr>
+    <td style="text-align:left;">MNC</td>
+    <td style="text-align:left;">Mature Neighborhood Commercial</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+<tr>
+    <td style="text-align:left;">MR&#8211;5</td>
+    <td style="text-align:left;">Mature Residential</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+<tr>
+    <td style="text-align:left;">OS</td>
+    <td style="text-align:left;">Open Space</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+<tr>
+    <td style="text-align:left;">SGC</td>
+    <td style="text-align:left;">Suburban General Commercial</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+<tr>
+    <td style="text-align:left;">SMF</td>
+    <td style="text-align:left;">Suburban Multi-Family</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+<tr>
+    <td style="text-align:left;">SNC</td>
+    <td style="text-align:left;">Suburban Neighborhood Commercial</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+<tr>
+    <td style="text-align:left;">SR&#8211;1</td>
+    <td style="text-align:left;">Suburban Residential</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+<tr>
+    <td style="text-align:left;">SR&#8211;2</td>
+    <td style="text-align:left;">Suburban Residential</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+<tr>
+    <td style="text-align:left;">T</td>
+    <td style="text-align:left;">Transitional</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+<tr>
+    <td style="text-align:left;">UBD</td>
+    <td style="text-align:left;">Urban Business District</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+<tr>
+    <td style="text-align:left;">WO</td>
+    <td style="text-align:left;">Wellhead Operation</td>
+    <td style="text-align:left;"></td>
+    <td style="text-align:left;"></td>
+</tr>
+</tbody>
+</table>
 
-The site asks the user what type of business they will be running, which includes a graphic interface of _Common Business Types_, as well as a full list of all options.
+<h2 id="codesforuseregulations">Codes for Use Regulations</h2>
 
-### Business Types
-#### Common Business Types
-- Industrial Bakery
-- Bar
-- Café
-- Restaurant
-- Hotel/Motel
-- Office
-- Clothing Store
-- Pharmacy
-- Bakery
-- Preschool
-- Pool Hall
-- Golf Course
-- Gym
+<p>Beginning on page 95, meanings of the following are provided:</p>
 
-#### All Business Types
-There is also a [hyperlink option](http://opencounter.cityofsantacruz.com/en/pages/business-type) to view all business types, which include the following:
+<ul>
+<li><strong>P:</strong> <em>permitted by right as a <strong>principal use</strong></em> <strong>(p. 96)</strong></li>
+<li><strong>P<em>:</em>* Same as above, though <em>the characteristics of these uses require development standards that are unique to the specific use, and these standards are not common to the uses generally permitted in the District</em> </strong>(p. 96)**</li>
+<li><strong>C:</strong> <em>A use listed in a Permitted Use Schedule is permitted as a <strong>conditional use</strong> in a District</em> <strong>(p. 97)</strong></li>
+<li><strong>A:</strong> <em>permitted as a subordinate building or use when it is clearly incidental to and located on the same zoning lot as the principal building or use</em>, i.e., <strong>accessory use</strong> <strong>p. 97</strong></li>
+<li><strong>PD:</strong> <em>Permitted as part of a Planned Development</em> <strong>(p. 104)</strong></li>
+</ul>
 
+<h1 id="miscellaneous">Miscellaneous</h1>
 
+<h2 id="opencountersantacruz">OpenCounter Santa Cruz</h2>
 
-### Operations Section  
+<p><a href="http://opencounter.cityofsantacruz.com">OpenCounter Santa Cruz</a> is an example of a website that&#8230; </p>
 
-In the [Operations Section](http://opencounter.cityofsantacruz.com/en/sections/operations), there are the following questions:
+<blockquote>
+<p>will guide you through the process of registering a new business in Santa Cruz, CA.</p>
+</blockquote>
 
-- What is the extent of the project that you're proposing?
-    + Are you planning on making any physical alterations, beyond paint and cosmetic changes to your proposed location? Are you planning a remodel or building project?
-- Will the building use change significantly in with this project?
-- Does your business name include your last name?
-- Are you planning on having live music or events?        
-- Do you have plans to install a sign?
+<p>The site asks the user what type of business they will be running, which includes a graphic interface of <em>Common Business Types</em>, as well as a full list of all options.</p>
 
-Also asks for these addtional details:
+<h3 id="businesstypes">Business Types</h3>
 
-- Suite Number
-- Number of employees you plan to have by end of first year
-- Structure of business
-    + Sole Proprietorship
-    + General Partnership
-    + Limited Partnership
-    + Limited Liability Partnership
-    + Limited Liability Company
-    + Corporation
-    + Trust
-    + Joint Venture
-    + Husband and Wife
-    + State of Local Registered Domestic Partners
-- Business Phone Number
+<h4 id="commonbusinesstypes">Common Business Types</h4>
 
-### Team Section
-- Do you have a co-founder?
-- Are you working with an architect, engineer or design professional? 
-- Do you own the building that you' re proposing for this project?  
+<ul>
+<li>Industrial Bakery</li>
+<li>Bar</li>
+<li>Café</li>
+<li>Restaurant</li>
+<li>Hotel/Motel</li>
+<li>Office</li>
+<li>Clothing Store</li>
+<li>Pharmacy</li>
+<li>Bakery</li>
+<li>Preschool</li>
+<li>Pool Hall</li>
+<li>Golf Course</li>
+<li>Gym</li>
+</ul>
 
-Additionally, known information about the owner of the property is requested.
+<h4 id="allbusinesstypes">All Business Types</h4>
 
-### Site Section
-> This section will cover topics that relate to your physical footprint. This includes building permit process and potential development impacts as well as stepping through signage and other external features on site.
+<p>There is also a <a href="http://opencounter.cityofsantacruz.com/en/pages/business-type">hyperlink option</a> to view all business types, which include the following:</p>
 
-> Please note that submitting any information in this section will not submit permit applications to the City.
+<h3 id="operationssection">Operations Section</h3>
 
-The [Site Section](http://opencounter.cityofsantacruz.com/en/sections/site) asks the following questions:
+<p>In the <a href="http://opencounter.cityofsantacruz.com/en/sections/operations">Operations Section</a>, there are the following questions:</p>
 
-- Is your project 100% new construction?
-- Does the project require demolition of an existing structure?
-- Are you planning on altering existing plumbing features or adding new ones?
-- Are you planning on altering existing mechanical features or adding new ones?Are you planning on altering existing electrical features or adding new ones?
-- Does the project impact require grading or a new foundation?
-- Are you temporarily blocking off the sidewalk (or working above it) during construction?
-- Does your location have fire sprinklers?
-- Does your building project or planned operations include hazardous materials or substances?
-- Is your location ADA accessible? (Americans with Disability Act)
-- Will you be cutting into the sidewalk or street to install utilities as part this project?
+<ul>
+<li>What is the extent of the project that you&#8217;re proposing?
 
+<ul>
+<li>Are you planning on making any physical alterations, beyond paint and cosmetic changes to your proposed location? Are you planning a remodel or building project?</li>
+</ul></li>
+<li>Will the building use change significantly in with this project?</li>
+<li>Does your business name include your last name?</li>
+<li>Are you planning on having live music or events?</li>
+<li>Do you have plans to install a sign?</li>
+</ul>
 
-### Summary
-This seciton provides a summary view of all information, and directs the user to the Santa Cruz Planning Department:
+<p>Also asks for these addtional details:</p>
 
-> Thank you for your interest in starting a business in Santa Cruz! Please contact the Planning Department with any questions regarding permits to start the business process.
+<ul>
+<li>Suite Number</li>
+<li>Number of employees you plan to have by end of first year</li>
+<li>Structure of business
 
-A submit button is also provided, and presumably this leads to followup with all parties.
+<ul>
+<li>Sole Proprietorship</li>
+<li>General Partnership</li>
+<li>Limited Partnership</li>
+<li>Limited Liability Partnership</li>
+<li>Limited Liability Company</li>
+<li>Corporation</li>
+<li>Trust</li>
+<li>Joint Venture</li>
+<li>Husband and Wife</li>
+<li>State of Local Registered Domestic Partners</li>
+</ul></li>
+<li>Business Phone Number</li>
+</ul>
 
-## Definitions in Dayton Zoning PDF
+<h3 id="teamsection">Team Section</h3>
 
-### Non-Conforming Usage
-Non-conforming usage can mean a parcel within a given zone may have been grandfathered into a zone despite not fullfilling a given zone's requirements, and thus can be referred to as a _non-conforming_ parcel.  On page 51, there is further explanation:
-> non-conforming uses, buildings, lots, and structures are subject to regulations limiting their use, restoration, reconstruction, extension, and substitution.
+<ul>
+<li>Do you have a co-founder?</li>
+<li>Are you working with an architect, engineer or design professional?</li>
+<li>Do you own the building that you&#8217; re proposing for this project?</li>
+</ul>
 
+<p>Additionally, known information about the owner of the property is requested.</p>
 
-### Retail
-On page 83, **Retail** is defined as the following:
+<h3 id="sitesection">Site Section</h3>
 
-> An establishment engaged in the selling or renting of goods or merchandise to the general public for personal or household consumption, and rendering services incidental to the sale of such products. Such an establishment is open to the general public during regular business hours and has display areas that are designed and laid out to attract the general public. In determining a use to be a retail use, the proportion of display area vs. storage area and the proportion of the building facade devoted to display windows may be considered. This term does not include any adult entertainment uses. This term includes, but is not limited to, artist’s studios, dry cleaning establishments, laundromats, portrait studios, and bakeries.
+<blockquote>
+<p>This section will cover topics that relate to your physical footprint. This includes building permit process and potential development impacts as well as stepping through signage and other external features on site.</p>
 
-## Conditional
-### Conditional Related to Distance
-On page 313 of Dayton's zoning documentation, the following is stated:
+<p>Please note that submitting any information in this section will not submit permit applications to the City.</p>
+</blockquote>
 
-> Any building or other facility, on a zoning lot, used to house or exercise livestock shall be at least 200 feet from any lot in a residential zoning district.
+<p>The <a href="http://opencounter.cityofsantacruz.com/en/sections/site">Site Section</a> asks the following questions:</p>
 
-This might be an opportunity to build a query based on spatial analysis-- i.e., a buffer of all areas that are >= 200 feet from a residential zone district.
+<ul>
+<li>Is your project 100% new construction?</li>
+<li>Does the project require demolition of an existing structure?</li>
+<li>Are you planning on altering existing plumbing features or adding new ones?</li>
+<li>Are you planning on altering existing mechanical features or adding new ones?Are you planning on altering existing electrical features or adding new ones?</li>
+<li>Does the project impact require grading or a new foundation?</li>
+<li>Are you temporarily blocking off the sidewalk (or working above it) during construction?</li>
+<li>Does your location have fire sprinklers?</li>
+<li>Does your building project or planned operations include hazardous materials or substances?</li>
+<li>Is your location ADA accessible? (Americans with Disability Act)</li>
+<li>Will you be cutting into the sidewalk or street to install utilities as part this project?</li>
+</ul>
 
+<h3 id="summary">Summary</h3>
+
+<p>This seciton provides a summary view of all information, and directs the user to the Santa Cruz Planning Department:</p>
+
+<blockquote>
+<p>Thank you for your interest in starting a business in Santa Cruz! Please contact the Planning Department with any questions regarding permits to start the business process.</p>
+</blockquote>
+
+<p>A submit button is also provided, and presumably this leads to followup with all parties.</p>
+
+<h2 id="definitionsindaytonzoningpdf">Definitions in Dayton Zoning PDF</h2>
+
+<h3 id="non-conformingusage">Non-Conforming Usage</h3>
+
+<p>Non-conforming usage can mean a parcel within a given zone may have been grandfathered into a zone despite not fullfilling a given zone&#8217;s requirements, and thus can be referred to as a <em>non-conforming</em> parcel. On page 51, there is further explanation: </p>
+
+<blockquote>
+<p>non-conforming uses, buildings, lots, and structures are subject to regulations limiting their use, restoration, reconstruction, extension, and substitution.</p>
+</blockquote>
+
+<h3 id="retail">Retail</h3>
+
+<p>On page 83, <strong>Retail</strong> is defined as the following:</p>
+
+<blockquote>
+<p>An establishment engaged in the selling or renting of goods or merchandise to the general public for personal or household consumption, and rendering services incidental to the sale of such products. Such an establishment is open to the general public during regular business hours and has display areas that are designed and laid out to attract the general public. In determining a use to be a retail use, the proportion of display area vs. storage area and the proportion of the building facade devoted to display windows may be considered. This term does not include any adult entertainment uses. This term includes, but is not limited to, artist’s studios, dry cleaning establishments, laundromats, portrait studios, and bakeries.</p>
+</blockquote>
+
+<h2 id="conditional">Conditional</h2>
+
+<h3 id="conditionalrelatedtodistance">Conditional Related to Distance</h3>
+
+<p>On page 313 of Dayton&#8217;s zoning documentation, the following is stated:</p>
+
+<blockquote>
+<p>Any building or other facility, on a zoning lot, used to house or exercise livestock shall be at least 200 feet from any lot in a residential zoning district.</p>
+</blockquote>
+
+<p>This might be an opportunity to build a query based on spatial analysis&#8211; i.e., a buffer of all areas that are &gt;= 200 feet from a residential zone district.</p>
 <!-- Footnotes -->
-[^fn1]: [NameMangler](http://manytricks.com/namemangler/) OSX application used to rename files.
+
+<div class="footnotes">
+<hr />
+<ol>
+
+<li id="fn:1">
+<p><a href="http://manytricks.com/namemangler/">NameMangler</a> OSX application used to rename files. <a href="#fnref:1" title="return to article" class="reversefootnote">&#160;&#8617;</a></p>
+</li>
+
+</ol>
+</div>
