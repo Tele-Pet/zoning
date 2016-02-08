@@ -7,7 +7,15 @@
 <ul>
 <li><a href="#countyparceldata">County Parcel data</a></li>
 <li><a href="#countylandusecodes">County Land Use Codes</a></li>
-<li><a href="#cityzoningdata">City Zoning Data</a></li>
+<li><a href="#cityzoningdata">City Zoning Data</a>
+
+<ul>
+<li><a href="#determiningprojection">Determining Projection</a></li>
+<li><a href="#uniquevaluesinnew_zonecolumn">Unique values in <code>NEW_ZONE</code> column</a></li>
+<li><a href="#addingfullnamestoattributecolumninqgis">Adding full names to attribute column in QGIS</a></li>
+<li><a href="#deleteunneededcolumns">Delete unneeded columns</a></li>
+<li><a href="#exportseparatelayersasgeojson">Export separate layers as GeoJSON</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#understandingcityzoningdata">Understanding City Zoning Data</a>
 
@@ -18,8 +26,26 @@
 <li><a href="#miscellaneous">Miscellaneous</a>
 
 <ul>
-<li><a href="#definitions">Definitions</a></li>
-<li><a href="#conditional">Conditional</a></li>
+<li><a href="#opencountersantacruz">OpenCounter Santa Cruz</a>
+
+<ul>
+<li><a href="#businesstypes">Business Types</a></li>
+<li><a href="#operationssection">Operations Section</a></li>
+<li><a href="#teamsection">Team Section</a></li>
+<li><a href="#sitesection">Site Section</a></li>
+<li><a href="#summary">Summary</a></li>
+</ul></li>
+<li><a href="#definitionsindaytonzoningpdf">Definitions in Dayton Zoning PDF</a>
+
+<ul>
+<li><a href="#non-conformingusage">Non-Conforming Usage</a></li>
+<li><a href="#retail">Retail</a></li>
+</ul></li>
+<li><a href="#conditional">Conditional</a>
+
+<ul>
+<li><a href="#conditionalrelatedtodistance">Conditional Related to Distance</a></li>
+</ul></li>
 </ul></li>
 </ul>
 <!-- /MarkdownTOC -->
@@ -326,7 +352,122 @@ for var in *.shp; do shp2geojson ${var%\.*}; done</code></pre>
 
 <h1 id="miscellaneous">Miscellaneous</h1>
 
-<h2 id="definitions">Definitions</h2>
+<h2 id="opencountersantacruz">OpenCounter Santa Cruz</h2>
+
+<p><a href="http://opencounter.cityofsantacruz.com">OpenCounter Santa Cruz</a> is an example of a website that&#8230; </p>
+
+<blockquote>
+<p>will guide you through the process of registering a new business in Santa Cruz, CA.</p>
+</blockquote>
+
+<p>The site asks the user what type of business they will be running, which includes a graphic interface of <em>Common Business Types</em>, as well as a full list of all options.</p>
+
+<h3 id="businesstypes">Business Types</h3>
+
+<h4 id="commonbusinesstypes">Common Business Types</h4>
+
+<ul>
+<li>Industrial Bakery</li>
+<li>Bar</li>
+<li>Café</li>
+<li>Restaurant</li>
+<li>Hotel/Motel</li>
+<li>Office</li>
+<li>Clothing Store</li>
+<li>Pharmacy</li>
+<li>Bakery</li>
+<li>Preschool</li>
+<li>Pool Hall</li>
+<li>Golf Course</li>
+<li>Gym</li>
+</ul>
+
+<h4 id="allbusinesstypes">All Business Types</h4>
+
+<p>There is also a <a href="http://opencounter.cityofsantacruz.com/en/pages/business-type">hyperlink option</a> to view all business types, which include the following:</p>
+
+<h3 id="operationssection">Operations Section</h3>
+
+<p>In the <a href="http://opencounter.cityofsantacruz.com/en/sections/operations">Operations Section</a>, there are the following questions:</p>
+
+<ul>
+<li>What is the extent of the project that you&#8217;re proposing?
+
+<ul>
+<li>Are you planning on making any physical alterations, beyond paint and cosmetic changes to your proposed location? Are you planning a remodel or building project?</li>
+</ul></li>
+<li>Will the building use change significantly in with this project?</li>
+<li>Does your business name include your last name?</li>
+<li>Are you planning on having live music or events?</li>
+<li>Do you have plans to install a sign?</li>
+</ul>
+
+<p>Also asks for these addtional details:</p>
+
+<ul>
+<li>Suite Number</li>
+<li>Number of employees you plan to have by end of first year</li>
+<li>Structure of business
+
+<ul>
+<li>Sole Proprietorship</li>
+<li>General Partnership</li>
+<li>Limited Partnership</li>
+<li>Limited Liability Partnership</li>
+<li>Limited Liability Company</li>
+<li>Corporation</li>
+<li>Trust</li>
+<li>Joint Venture</li>
+<li>Husband and Wife</li>
+<li>State of Local Registered Domestic Partners</li>
+</ul></li>
+<li>Business Phone Number</li>
+</ul>
+
+<h3 id="teamsection">Team Section</h3>
+
+<ul>
+<li>Do you have a co-founder?</li>
+<li>Are you working with an architect, engineer or design professional?</li>
+<li>Do you own the building that you&#8217; re proposing for this project?</li>
+</ul>
+
+<p>Additionally, known information about the owner of the property is requested.</p>
+
+<h3 id="sitesection">Site Section</h3>
+
+<blockquote>
+<p>This section will cover topics that relate to your physical footprint. This includes building permit process and potential development impacts as well as stepping through signage and other external features on site.</p>
+
+<p>Please note that submitting any information in this section will not submit permit applications to the City.</p>
+</blockquote>
+
+<p>The <a href="http://opencounter.cityofsantacruz.com/en/sections/site">Site Section</a> asks the following questions:</p>
+
+<ul>
+<li>Is your project 100% new construction?</li>
+<li>Does the project require demolition of an existing structure?</li>
+<li>Are you planning on altering existing plumbing features or adding new ones?</li>
+<li>Are you planning on altering existing mechanical features or adding new ones?Are you planning on altering existing electrical features or adding new ones?</li>
+<li>Does the project impact require grading or a new foundation?</li>
+<li>Are you temporarily blocking off the sidewalk (or working above it) during construction?</li>
+<li>Does your location have fire sprinklers?</li>
+<li>Does your building project or planned operations include hazardous materials or substances?</li>
+<li>Is your location ADA accessible? (Americans with Disability Act)</li>
+<li>Will you be cutting into the sidewalk or street to install utilities as part this project?</li>
+</ul>
+
+<h3 id="summary">Summary</h3>
+
+<p>This seciton provides a summary view of all information, and directs the user to the Santa Cruz Planning Department:</p>
+
+<blockquote>
+<p>Thank you for your interest in starting a business in Santa Cruz! Please contact the Planning Department with any questions regarding permits to start the business process.</p>
+</blockquote>
+
+<p>A submit button is also provided, and presumably this leads to followup with all parties.</p>
+
+<h2 id="definitionsindaytonzoningpdf">Definitions in Dayton Zoning PDF</h2>
 
 <h3 id="non-conformingusage">Non-Conforming Usage</h3>
 
